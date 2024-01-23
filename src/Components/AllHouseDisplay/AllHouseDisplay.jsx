@@ -1,14 +1,13 @@
+/* eslint-disable react/prop-types */
 import { useContext } from "react";
-import useFetchHouse from "../../Hooks/useFetchHouse";
 import AllHouseRow from "../AllHouseRow";
 import SectionTitle from "../SectionTitle";
 import { AuthContext } from "../../Provider/AuthProvider";
 
-const AllHouseDisplay = () => {
-  const [allHouse, refetch] = useFetchHouse();
+const AllHouseDisplay = ({ houses,houseToDisplay, refetch }) => {
   const { user } = useContext(AuthContext);
 
-  const allBookedHouse = allHouse.filter((house) => {
+  const allBookedHouse = houses.filter((house) => {
     if (house?.userEmail === user?.email && house?.isBooked === true) {
       return true;
     } else {
@@ -33,7 +32,7 @@ const AllHouseDisplay = () => {
         <h1 className="text-xl md:text-3xl font-bold">
           Total Camps:{" "}
           {user?.role === "House_Owner"
-            ? allHouse?.length
+            ? houseToDisplay?.length
             : user?.role === "House_Renter"
             ? allBookedHouse?.length
             : 0}
@@ -68,7 +67,7 @@ const AllHouseDisplay = () => {
             </thead>
             {user?.role === "House_Owner" ? (
               <tbody>
-                {allHouse?.map((house, i) => (
+                {houseToDisplay?.map((house, i) => (
                   <AllHouseRow
                     key={house._id}
                     house={house}
