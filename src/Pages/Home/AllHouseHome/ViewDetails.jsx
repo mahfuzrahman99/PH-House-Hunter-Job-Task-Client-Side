@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import { Link, useLoaderData } from "react-router-dom";
-import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { useState } from "react";
 import BookHouse from "./Booked House/BookHouse";
@@ -8,7 +7,6 @@ import BookHouse from "./Booked House/BookHouse";
 /* eslint-disable react/prop-types */
 const ViewDetails = () => {
     const house = useLoaderData();
-    const axiosSecure = useAxiosSecure();
     const [showModal, setShowModal] = useState(false);
   const {
     _id,
@@ -26,26 +24,7 @@ const ViewDetails = () => {
     isBooked,
   } = house;
 
-  // const handleBookingHouse = () => {
-  //   axiosSecure
-  //     .put(`/houses/${_id}`, {
-  //       isBooked: true,
-  //     })
-  //     .then((responses) => {
-  //       console.log(responses.data);
-  //       if (responses.data.modifiedCount) {
-  //        Swal.fire({
-  //         position: "top",
-  //         icon: "success",
-  //         title: "Booking successfully",
-  //         showConfirmButton: false,
-  //         timer: 1500,
-  //       });
-  //       } else {
-  //         console.log(responses.error); 
-  //       }
-  //     });
-  // };
+
 
   return (
     <div>
@@ -99,12 +78,10 @@ const ViewDetails = () => {
             </p>
           </div>
           <div className="flex justify-end">
-            <Link to={``}>
               <button onClick={() => setShowModal(true)} className="btn btn-ghost bg-[#00938a] hover:bg-[#0f4b47] text-white">
                 Book now
               </button>
-              <BookHouse showModal={showModal} setShowModal={setShowModal} />
-            </Link>
+              <BookHouse showModal={showModal} _id={_id} setShowModal={setShowModal} />
           </div>
         </div>
       </div>

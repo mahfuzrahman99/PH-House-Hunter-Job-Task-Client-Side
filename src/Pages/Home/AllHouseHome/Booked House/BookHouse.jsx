@@ -3,11 +3,14 @@
 import { useContext } from "react";
 import SectionTitle from "../../../../Components/SectionTitle";
 import { AuthContext } from "../../../../Provider/AuthProvider";
+import Swal from "sweetalert2";
+// import useAxiosPublic from "../../../../Hooks/useAxiosPublic";
 
-const BookHouse = ({ showModal, setShowModal }) => {
+const BookHouse = ({ showModal, setShowModal, _id }) => {
   const { user } = useContext(AuthContext);
+//   const axiosPublic = useAxiosPublic();
 
-  const handleSubmit = (e) => {
+  const handleBookingHouse = (e) => {
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
@@ -15,6 +18,46 @@ const BookHouse = ({ showModal, setShowModal }) => {
     const phoneNumber = form.phoneNumber.value;
     const bookedUser = { name, email, phoneNumber };
     console.log(bookedUser);
+
+    console.log(_id, e);
+    // axiosPublic
+    //   .put(`/bookHouses/${id}`, {
+    //     isBooked: true,
+    //   })
+    fetch(`http://localhost:5000/bookHouses/${_id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json", // Use standard header format
+      },
+      // Add the request body (assuming you're sending data)
+      body: JSON.stringify({
+        isBooked: true,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json(); // Parse JSON response
+      })
+      .then((data) => {
+        console.log(data);
+        if (data.modifiedCount) {
+          Swal.fire({
+            position: "top",
+            icon: "success",
+            title: "Booking successful!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        } else {
+          console.error("Booking failed:", data.error); // Use console.error for errors
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        // Handle errors appropriately, e.g., display an error message
+      });
   };
 
   return (
@@ -22,12 +65,15 @@ const BookHouse = ({ showModal, setShowModal }) => {
       {showModal && (
         <dialog id="my_modal_1" className="modal" open>
           <div className="modal-box max-h-[90vh] max-w-4xl mx-auto">
-            <SectionTitle heading={"Update Home"} />
-            <form onSubmit={handleSubmit} className="flex justify-center">
+            <SectionTitle heading={"Booking Form"} />
+            <form
+              onSubmit={handleBookingHouse}
+              className="flex justify-center"
+            >
               <div className="max-w-3xl w-full bg-gray-200 p-8 rounded shadow-lg">
                 <div className="md:grid grid-cols-2 gap-2">
                   <h2 className="text-2xl font-semibold mb-6 text-center text-[#00938a] col-span-2">
-                    Update Home
+                    Book This House
                   </h2>
 
                   <div className="mb-4 col-span-2">
@@ -62,12 +108,10 @@ const BookHouse = ({ showModal, setShowModal }) => {
                   </div>
                 </div>
                 <div className="">
-                  <button
-                    type="submit"
-                    className="bg-[#00938a] hover:bg-[#126f6a] text-white font-bold py-2 px-4 rounded md:w-1/6"
-                  >
-                    Book
-                  </button>
+                  <input type="submit"
+                    className="btn btn-ghost bg-[#00938a] hover:bg-[#126f6a] text-white font-bold py-2 px-4 rounded md:w-1/6"
+                    value={'Book'}
+                  />
                 </div>
               </div>
             </form>

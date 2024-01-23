@@ -7,7 +7,7 @@ const useFetchHouse = () => {
     const axiosSecure = useAxiosSecure()
 
     const {data: houses=[], refetch} = useQuery({
-        queryKey:"houses",
+        queryKey:["houses"],
         queryFn: async()=>{
             const res = await axiosSecure.get("/houses");
             return res.data;
