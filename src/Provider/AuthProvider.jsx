@@ -27,6 +27,7 @@ const AuthProvider = ({ children }) => {
       axiosSecure
         .get("/loggedInUser")
         .then((res) => {
+          setLoading(false)
           setUser(res.data);
           console.log(res.data);
         })
@@ -39,6 +40,7 @@ const AuthProvider = ({ children }) => {
   const authInfo = {
     user,
     loading,
+    setLoading,
     // createUser,
     signInUser,
     setUser,

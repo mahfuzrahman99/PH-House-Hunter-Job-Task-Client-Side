@@ -13,6 +13,8 @@ import ViewDetails from "../Pages/Home/AllHouseHome/ViewDetails";
 import HouseUserDashboard from "../Layouts/HouseUserDashboard";
 import BookingDetails from "../Pages/Home/AllHouseHome/Booked House/BookingDetails";
 import ContactUs from "../Pages/ContactUs";
+import PalindromeChecker from "../PalindromeChecker";
+import PrivetRout from "./PrivetRout";
 
 const router = createBrowserRouter([
     {
@@ -39,12 +41,15 @@ const router = createBrowserRouter([
               `http://localhost:5000/houses/${params.id}`
             ),
         },
-        {},
+        {
+          path:"palindrome",
+          element:<PalindromeChecker/>
+        },
       ]
     },
     {
       path:"owner_Dashboard",
-      element:<HouseOwnerDashboard/>,
+      element:<PrivetRout><HouseOwnerDashboard/></PrivetRout>,
       children:[
         {
           path:"owner_Profile",

@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+import { PhotoView } from "react-photo-view";
 import { Link } from "react-router-dom";
 
 /* eslint-disable react/prop-types */
@@ -22,11 +23,13 @@ const HousesHomeOneCard = ({ house }) => {
     <div>
       <div className="md:grid grid-cols-2 gap-2 shadow-xl rounded-lg">
         <div className="col-span-1 flex justify-center w-full md:h-[420px]">
+          <PhotoView src={picture}>
           <img
             className="md:rounded-l-lg rounded-t-lg md:h-full h-auto w-full md:w-auto"
             src={picture}
             alt=""
           />
+          </PhotoView>
         </div>
         <div className="p-2 text-left text-lg flex flex-col justify-between">
           <div className="space-y-3">
