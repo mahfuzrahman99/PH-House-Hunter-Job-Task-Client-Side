@@ -4,34 +4,62 @@ import { useContext } from "react";
 import SectionTitle from "../../../../Components/SectionTitle";
 import { AuthContext } from "../../../../Provider/AuthProvider";
 import Swal from "sweetalert2";
-// import useAxiosPublic from "../../../../Hooks/useAxiosPublic";
+import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 
-const BookHouse = ({ showModal, setShowModal, _id }) => {
+const BookHouse = ({ showModal, setShowModal, house }) => {
   const { user } = useContext(AuthContext);
-//   const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
+  const {
+    _id,
+    name: houseName,
+    address,
+    city,
+    phone_number,
+    picture,
+  } = house;
 
-  const handleBookingHouse = (e) => {
+  const handleBookingHouse = async (e) => {
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
     const email = form.email.value;
     const phoneNumber = form.phoneNumber.value;
-    const bookedUser = { name, email, phoneNumber };
+    const bookedUser = { 
+      name,
+      email,
+      phoneNumber,
+      houseName,
+      address,
+      city,
+      phone_number,
+      picture,
+      houseId: _id,
+    };
     console.log(bookedUser);
 
-    console.log(_id, e);
-    // axiosPublic
-    //   .put(`/bookHouses/${id}`, {
-    //     isBooked: true,
-    //   })
+    const res = await axiosSecure.post("/bookedHousesList", bookedUser)
+    console.log(res.data);
+    // if (res.data.insertedId) {
+    //   // reset();
+    //   Swal.fire({
+    //     position: "top",
+    //     icon: "success",
+    //     title: `${houseName} is posted to the BookedHouse list`,
+    //     showConfirmButton: false,
+    //     timer: 1500,
+    //   });
+    // }
+
+    // console.log(_id, e);
     fetch(`http://localhost:5000/bookHouses/${_id}`, {
       method: "PATCH",
       headers: {
-        "Content-Type": "application/json", // Use standard header format
+        "Content-Type": "application/json", 
       },
-      // Add the request body (assuming you're sending data)
+      
       body: JSON.stringify({
         isBooked: true,
+        userEmail: user?.email,
       }),
     })
       .then((response) => {
@@ -83,7 +111,7 @@ const BookHouse = ({ showModal, setShowModal, _id }) => {
                       type="text"
                       readOnly
                       name="name"
-                      defaultValue={user.fullName}
+                      defaultValue={user?.fullName}
                     />
                   </div>
 
@@ -94,7 +122,7 @@ const BookHouse = ({ showModal, setShowModal, _id }) => {
                       name="email"
                       readOnly
                       className="w-full bg-white p-2 rounded-md mt-1"
-                      defaultValue={user.email}
+                      defaultValue={user?.email}
                     />
                   </div>
 

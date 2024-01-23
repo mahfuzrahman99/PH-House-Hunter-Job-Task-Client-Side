@@ -69,7 +69,7 @@ const UpdateHome = ({ showModal, setShowModal, house, refetch }) => {
         Swal.fire({
           position: "top",
           icon: "success",
-          title: `${data.name} is updated successfully`,
+          title: `${data?.name} is updated successfully`,
           showConfirmButton: false,
           timer: 1500,
         });

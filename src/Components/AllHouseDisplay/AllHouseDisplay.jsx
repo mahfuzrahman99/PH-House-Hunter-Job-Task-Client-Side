@@ -1,16 +1,42 @@
+import { useContext } from "react";
 import useFetchHouse from "../../Hooks/useFetchHouse";
 import AllHouseRow from "../AllHouseRow";
 import SectionTitle from "../SectionTitle";
+import { AuthContext } from "../../Provider/AuthProvider";
 
 const AllHouseDisplay = () => {
   const [allHouse, refetch] = useFetchHouse();
+  const { user } = useContext(AuthContext);
+
+  const allBookedHouse = allHouse.filter((house) => {
+    if (house?.userEmail === user?.email && house?.isBooked === true) {
+      return true;
+    } else {
+      return false;
+    }
+  });
+
+  console.log(allBookedHouse);
 
   return (
     <div className="max-w-5xl mx-auto w-[300px] md:w-auto">
-    <SectionTitle heading={"All Houses"} />
+      {user?.role === "House_Owner" ? (
+        <SectionTitle heading={"All Houses"} />
+      ) : user?.role === "House_Renter" ? (
+        <SectionTitle heading={"Booked Houses"} />
+      ) : (
+        <p className="text-red-600 font-bold text-3xl md:text-9xl text-center md:mt-28">
+          You are not valid user
+        </p>
+      )}
       <div className="bg-gray-100 p-4 overflow-x-auto">
         <h1 className="text-xl md:text-3xl font-bold">
-          Total Camps: {allHouse.length}
+          Total Camps:{" "}
+          {user?.role === "House_Owner"
+            ? allHouse?.length
+            : user?.role === "House_Renter"
+            ? allBookedHouse?.length
+            : 0}
         </h1>
         <div>
           <table className="min-w-full bg-gray-300">
@@ -28,20 +54,45 @@ const AllHouseDisplay = () => {
                 <th className="py-2 px-4 border-b">Rent Per Month</th>
                 <th className="py-2 px-4 border-b">Mobile No</th>
                 <th className="py-2 px-4 border-b">Description</th>
-                <th className="py-2 px-4 border-b">Update</th>
+                {user?.role === "House_Owner" ? (
+                  <th className="py-2 px-4 border-b">Update</th>
+                ) : (
+                  ""
+                )}
+                {user?.role === "House_Owner" ? (
                 <th className="py-2 px-4 border-b">Delete</th>
+                ) : (
+                  ""
+                )}
               </tr>
             </thead>
-            <tbody>
-              {allHouse.map((house, i) => (
-                <AllHouseRow
-                  key={house._id}
-                  house={house}
-                  refetch={refetch}
-                  i={i}
-                />
-              ))}
-            </tbody>
+            {user?.role === "House_Owner" ? (
+              <tbody>
+                {allHouse?.map((house, i) => (
+                  <AllHouseRow
+                    key={house._id}
+                    house={house}
+                    refetch={refetch}
+                    i={i}
+                  />
+                ))}
+              </tbody>
+            ) : user?.role === "House_Renter" ? (
+              <tbody>
+                {allBookedHouse?.map((house, i) => (
+                  <AllHouseRow
+                    key={house._id}
+                    house={house}
+                    refetch={refetch}
+                    i={i}
+                  />
+                ))}
+              </tbody>
+            ) : (
+              <p className="text-red-600 font-bold text-3xl md:text-9xl text-center md:mt-28">
+                You are not valid user
+              </p>
+            )}
           </table>
         </div>
       </div>

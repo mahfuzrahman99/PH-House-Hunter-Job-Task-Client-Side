@@ -1,9 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
-import useUsers from "../Hooks/useUsers";
+import { Link, useNavigate } from "react-router-dom";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
+import registerImg from "../assets/Register.jpg"
 
 const Register = () => {
   const [fullName, setFullName] = useState("");
@@ -13,21 +14,9 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const { createUser, user } = useContext(AuthContext);
-  const [users] = useUsers()
+  const { setUser } = useContext(AuthContext);
+  const axiosSecure = useAxiosSecure()
 
-  useEffect(() => {
-    const userRole = users.find((u) => u?.email === user?.email);
-    console.log(userRole, users, user);
-    //Organizer
-    if (userRole) {
-      if (userRole.role === "House_Owner") {
-        navigate("/owner_Dashboard/owner_Profile");
-      } else if (userRole.role === "House_Renter") {
-        navigate("/user_Dashboard/user_Profile");
-      }
-    }
-  }, [user,users]);
 
   // console.log(createUser);
   const handleSubmit = async (e) => {
@@ -47,11 +36,13 @@ const Register = () => {
       email,
       password,
     };
-    // Send registration request to backend server (replace with your API endpoint)
     try {
-      const response = await createUser(userData);
-      if (response.ok) {
-        // Registration successful
+      console.log(userData);
+      
+    const response = await axiosSecure.post("/users", userData)
+      console.log(response.data.userData);
+      if (response.status === 200) {
+        setUser(response.data.userData);
         // (Here, redirect to login page or show success message)
         Swal.fire({
           position: "top",
@@ -60,7 +51,13 @@ const Register = () => {
           showConfirmButton: false,
           timer: 1500,
         });
-        navigate("/owner_Dashboard/owner_Profile")
+        if (userData) {
+          if (userData.role === "House_Owner") {
+            navigate("/owner_Dashboard/owner_Profile");
+          } else if (userData.role === "House_Renter") {
+            navigate("/user_Dashboard/user_Profile");
+          }
+        }
         console.log("Registration successful!");
       } else {
         // Registration failed
@@ -73,8 +70,9 @@ const Register = () => {
   };
 
   return (
-    <div>
-      <div className="register-form flex flex-col bg-[#00938a] p-4 rounded-xl max-w-2xl mx-auto md:mt-20">
+    <div className="bg-black bg-opacity-40 h-[100vh] flex items-center "
+    style={{ backgroundImage: `url(${registerImg})` }}>
+      <div className="register-form flex flex-col bg-[#00938a] p-4 rounded-xl max-w-2xl mx-auto ">
         <h1 className="text-2xl font-bold text-center py-4">
           User Registration
         </h1>
@@ -168,6 +166,12 @@ const Register = () => {
             >
               Register
             </button>
+          </div>
+          <div className="col-span-2">
+            <div className="flex justify-between items-center">
+              <p className="text-lg font-medium text-white">Already registered...! </p>
+              <Link to={"/login"} className="text-red-600 font-bold uppercase btn btn-ghost btn-sm bg-white hover:bg-white p-1 ml-2">Login</Link>
+            </div>
           </div>
         </form>
       </div>

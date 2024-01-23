@@ -49,7 +49,7 @@ const HousesHomeOneCard = ({ house }) => {
             </div>
             <p>
               <span className="font-bold">Description:</span>{" "}
-              {description.slice(0, 450)} <span className="font-bold">Read more...</span>
+              {description?.slice(0, 450)} <span className="font-bold">Read more...</span>
             </p>
           </div>
           <div className="flex justify-end">

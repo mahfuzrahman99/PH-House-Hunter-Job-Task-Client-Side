@@ -1,29 +1,17 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import { createContext, useEffect, useState } from "react";
-
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 export const AuthContext = createContext(null);
-
 
 const AuthProvider = ({ children }) => {
   // eslint-disable-next-line no-unused-vars
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const axiosSecure = useAxiosSecure();
 
   console.log(user);
-  const createUser = async (userData) => {
-    setLoading(true);
-    const response = await fetch("http://localhost:5000/users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-      });
-
-      return response.json();
-  };
-
   const signInUser = () => {
     setLoading(true);
   };
@@ -32,17 +20,26 @@ const AuthProvider = ({ children }) => {
     setLoading(true);
   };
 
-
   useEffect(() => {
-    if (user) {
-      setLoading(false);
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    console.log(isLoggedIn);
+    if (isLoggedIn) {
+      axiosSecure
+        .get("/loggedInUser")
+        .then((res) => {
+          setUser(res.data);
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
-  }, [user]);
+  }, []);
 
   const authInfo = {
     user,
     loading,
-    createUser,
+    // createUser,
     signInUser,
     setUser,
     logOut,

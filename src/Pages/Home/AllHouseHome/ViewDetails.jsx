@@ -81,7 +81,7 @@ const ViewDetails = () => {
               <button onClick={() => setShowModal(true)} className="btn btn-ghost bg-[#00938a] hover:bg-[#0f4b47] text-white">
                 Book now
               </button>
-              <BookHouse showModal={showModal} _id={_id} setShowModal={setShowModal} />
+              <BookHouse showModal={showModal} house={house} setShowModal={setShowModal} />
           </div>
         </div>
       </div>

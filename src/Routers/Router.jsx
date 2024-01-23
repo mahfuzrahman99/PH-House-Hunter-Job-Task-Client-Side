@@ -6,12 +6,13 @@ import Register from "../Pages/Register";
 import HouseOwnerDashboard from "../Layouts/HouseOwnerDashboard";
 import OwnerProfile from "../Pages/Dashboard/OwnerProfile";
 import AllHouse from "../Pages/Dashboard/AllHouse";
-import Contact from "../Pages/Home/Contact";
 import AllHouses from "../Pages/Home/AllHouses";
 import UserProfile from "../Pages/UserDashboard/UserProfile";
 import AllBookedHouse from "../Pages/UserDashboard/AllBookedHouse";
 import ViewDetails from "../Pages/Home/AllHouseHome/ViewDetails";
 import HouseUserDashboard from "../Layouts/HouseUserDashboard";
+import BookingDetails from "../Pages/Home/AllHouseHome/Booked House/BookingDetails";
+import ContactUs from "../Pages/ContactUs";
 
 const router = createBrowserRouter([
     {
@@ -24,7 +25,7 @@ const router = createBrowserRouter([
         },
         {
           path: "/contactUs",
-          element: <Contact/>
+          element: <ContactUs/>
         },
         {
           path:"/allHouses",
@@ -68,7 +69,10 @@ const router = createBrowserRouter([
           path:"allBookedHouse",
           element: <AllBookedHouse/>
         },
-        {},
+        {
+          path:"booking_details",
+          element: <BookingDetails/>,
+        },
       ]
     },
     {

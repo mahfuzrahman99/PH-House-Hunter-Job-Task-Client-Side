@@ -17,11 +17,11 @@ const HouseUserDashboard = () => {
                       isPending
                         ? "pending"
                         : isActive
-                        ? "text-[#91283d] hover:text-[#be1f3f] hover:font-bold underline font-bold"
+                        ? "text-[#ffCC00] hover:text-[#8c761f] hover:font-bold underline font-bold"
                         : "font-bold hover:text-[#fafafa] hover:font-bold  text-[#fafafa]"
                     }
                   >
-                      OWNER PROFILE
+                      USER PROFILE
                   </NavLink>
                 </li>
                 <li>
@@ -31,11 +31,25 @@ const HouseUserDashboard = () => {
                       isPending
                         ? "pending"
                         : isActive
-                        ? "text-[#91283d] hover:text-[#be1f3f] hover:font-bold underline font-bold"
+                        ? "text-[#ffCC00] hover:text-[#8c761f] hover:font-bold underline font-bold"
                         : "font-bold hover:text-[#fafafa] hover:font-bold  text-[#fafafa]"
                     }
                   >
-                    MY BOOKINGS
+                    ALL BOOKINGS HOUSES
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/user_Dashboard/booking_details"
+                    className={({ isActive, isPending }) =>
+                      isPending
+                        ? "pending"
+                        : isActive
+                        ? "text-[#ffCC00] hover:text-[#8c761f] hover:font-bold underline font-bold"
+                        : "font-bold hover:text-[#fafafa] hover:font-bold  text-[#fafafa]"
+                    }
+                  >
+                   ALL BOOKING LIST
                   </NavLink>
                 </li>
                 <div className="divider"></div>
@@ -46,7 +60,7 @@ const HouseUserDashboard = () => {
                       isPending
                         ? "pending"
                         : isActive
-                        ? "text-[#91283d] hover:text-[#be1f3f] hover:font-bold underline font-bold"
+                        ? "text-[#ffCC00] hover:text-[#8c761f] hover:font-bold underline font-bold"
                         : "font-bold hover:text-[#fafafa] hover:font-bold  text-[#fafafa]"
                     }
                   >
@@ -60,7 +74,7 @@ const HouseUserDashboard = () => {
                       isPending
                         ? "pending"
                         : isActive
-                        ? "text-[#91283d] hover:text-[#be1f3f] hover:font-bold underline font-bold"
+                        ? "text-[#ffCC00] hover:text-[#8c761f] hover:font-bold underline font-bold"
                         : "font-bold hover:text-[#fafafa] hover:font-bold  text-[#fafafa]"
                     }
                   >
@@ -74,7 +88,7 @@ const HouseUserDashboard = () => {
                       isPending
                         ? "pending"
                         : isActive
-                        ? "text-[#91283d] hover:text-[#be1f3f] hover:font-bold underline font-bold"
+                        ? "text-[#ffCC00] hover:text-[#8c761f] hover:font-bold underline font-bold"
                         : "font-bold hover:text-[#fafafa] hover:font-bold  text-[#fafafa]"
                     }
                   >
@@ -111,7 +125,7 @@ const HouseUserDashboard = () => {
                       isPending
                         ? "pending"
                         : isActive
-                        ? "text-[#91283d] hover:text-[#be1f3f] hover:font-bold underline font-bold"
+                        ? "text-[#ffCC00] hover:text-[#8c761f] hover:font-bold underline font-bold"
                         : "font-bold hover:text-[#fafafa] hover:font-bold  text-[#fafafa]"
                     }
                   >
@@ -125,7 +139,7 @@ const HouseUserDashboard = () => {
                       isPending
                         ? "pending"
                         : isActive
-                        ? "text-[#91283d] hover:text-[#be1f3f] hover:font-bold underline font-bold"
+                        ? "text-[#ffCC00] hover:text-[#8c761f] hover:font-bold underline font-bold"
                         : "font-bold hover:text-[#fafafa] hover:font-bold  text-[#fafafa]"
                     }
                   >
@@ -140,7 +154,7 @@ const HouseUserDashboard = () => {
                       isPending
                         ? "pending"
                         : isActive
-                        ? "text-[#91283d] hover:text-[#be1f3f] hover:font-bold underline font-bold"
+                        ? "text-[#ffCC00] hover:text-[#8c761f] hover:font-bold underline font-bold"
                         : "font-bold hover:text-[#fafafa] hover:font-bold  text-[#fafafa]"
                     }
                   >
@@ -154,7 +168,7 @@ const HouseUserDashboard = () => {
                       isPending
                         ? "pending"
                         : isActive
-                        ? "text-[#91283d] hover:text-[#be1f3f] hover:font-bold underline font-bold"
+                        ? "text-[#ffCC00] hover:text-[#8c761f] hover:font-bold underline font-bold"
                         : "font-bold hover:text-[#fafafa] hover:font-bold  text-[#fafafa]"
                     }
                   >
@@ -168,7 +182,7 @@ const HouseUserDashboard = () => {
                       isPending
                         ? "pending"
                         : isActive
-                        ? "text-[#91283d] hover:text-[#be1f3f] hover:font-bold underline font-bold"
+                        ? "text-[#ffCC00] hover:text-[#8c761f] hover:font-bold underline font-bold"
                         : "font-bold hover:text-[#fafafa] hover:font-bold  text-[#fafafa]"
                     }
                   >
