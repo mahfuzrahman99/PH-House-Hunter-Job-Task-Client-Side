@@ -46,7 +46,7 @@ const AllHouseRow = ({ house, i, refetch }) => {
       }
     }
   };
-// console.log(house.image)
+
   return (
     <>
       <tr className="bg-gray-100 text-xs">
