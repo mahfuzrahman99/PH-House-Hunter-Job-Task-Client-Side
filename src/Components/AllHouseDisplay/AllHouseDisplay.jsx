@@ -3,19 +3,19 @@ import { useContext } from "react";
 import AllHouseRow from "../AllHouseRow";
 import SectionTitle from "../SectionTitle";
 import { AuthContext } from "../../Provider/AuthProvider";
+import useFetchHouse from "../../Hooks/useFetchHouse";
 
-const AllHouseDisplay = ({ houses,houseToDisplay, refetch }) => {
+const AllHouseDisplay = ({ houseToDisplay, refetch }) => {
   const { user } = useContext(AuthContext);
+  const [houses] = useFetchHouse();
 
-  const allBookedHouse = houses.filter((house) => {
+  const allBookedHouse = houses?.filter((house) => {
     if (house?.userEmail === user?.email && house?.isBooked === true) {
       return true;
     } else {
       return false;
     }
   });
-
-  console.log(allBookedHouse);
 
   return (
     <div className="max-w-5xl mx-auto w-[300px] md:w-auto">
@@ -24,13 +24,13 @@ const AllHouseDisplay = ({ houses,houseToDisplay, refetch }) => {
       ) : user?.role === "House_Renter" ? (
         <SectionTitle heading={"Booked Houses"} />
       ) : (
-        <p className="text-red-600 font-bold text-3xl md:text-9xl text-center md:mt-28">
+        <p className="text-red-600 font-bold text-xl md:text-4xl text-center md:mt-28">
           You are not valid user
         </p>
       )}
       <div className="bg-gray-100 p-4 overflow-x-auto">
         <h1 className="text-xl md:text-3xl font-bold">
-          Total Camps:{" "}
+          Total House:{" "}
           {user?.role === "House_Owner"
             ? houseToDisplay?.length
             : user?.role === "House_Renter"
@@ -59,7 +59,7 @@ const AllHouseDisplay = ({ houses,houseToDisplay, refetch }) => {
                   ""
                 )}
                 {user?.role === "House_Owner" ? (
-                <th className="py-2 px-4 border-b">Delete</th>
+                  <th className="py-2 px-4 border-b">Delete</th>
                 ) : (
                   ""
                 )}
@@ -88,9 +88,13 @@ const AllHouseDisplay = ({ houses,houseToDisplay, refetch }) => {
                 ))}
               </tbody>
             ) : (
-              <p className="text-red-600 font-bold text-3xl md:text-9xl text-center md:mt-28">
-                You are not valid user
-              </p>
+              <tbody>
+                <td>
+                  <p className="text-red-600 font-bold text-2xl md:text-6xl text-center md:mt-28">
+                    You are not valid user
+                  </p>
+                </td>
+              </tbody>
             )}
           </table>
         </div>

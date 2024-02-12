@@ -28,7 +28,7 @@ const UpdateHome = ({ showModal, setShowModal, house, refetch }) => {
     rent_per_month,
     phone_number,
     description,
-    picture,
+    image,
     isBooked,
   } = house || {};
   const navigate = useNavigate();
@@ -36,7 +36,7 @@ const UpdateHome = ({ showModal, setShowModal, house, refetch }) => {
   const axiosSecure = useAxiosSecure();
 
   const onSubmit = async (data) => {
-    const imageFile = { image: data.picture[0] };
+    const imageFile = { image: data.image[0] };
 
     // Upload image to imgbb and get the URL
     const res = await axiosPublic.post(image_hosting_api, imageFile, {
@@ -64,8 +64,8 @@ const UpdateHome = ({ showModal, setShowModal, house, refetch }) => {
       const homeRes = await axiosSecure.patch(`/houses/${_id}`, homeItem);
 
       if (homeRes.data.modifiedCount > 0) {
-        reset()
-        refetch()
+        reset();
+        refetch();
         Swal.fire({
           position: "top",
           icon: "success",
@@ -258,12 +258,11 @@ const UpdateHome = ({ showModal, setShowModal, house, refetch }) => {
                       <p className="text-red-500">{errors.bathrooms.message}</p>
                     )}
                   </div>
-
                   <div className="mb-4">
                     <label className="block text-gray-700">Picture:</label>
-                    {picture && (
+                    {image && (
                       <img
-                        src={picture}
+                        src={image}
                         alt="Current House Picture"
                         className="max-w-full h-auto mb-4"
                       />
@@ -271,12 +270,12 @@ const UpdateHome = ({ showModal, setShowModal, house, refetch }) => {
                     <input
                       type="file"
                       accept="image/*"
-                      {...register("picture", {
+                      {...register("image", {
                         required: "Upload Picture is required",
                       })}
                     />
-                    {errors.picture && (
-                      <p className="text-red-500">{errors.picture.message}</p>
+                    {errors.image && (
+                      <p className="text-red-500">{errors.image.message}</p>
                     )}
                   </div>
                 </div>

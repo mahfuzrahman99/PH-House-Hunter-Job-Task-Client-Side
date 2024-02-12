@@ -16,19 +16,19 @@ const HousesHomeOneCard = ({ house }) => {
     rent_per_month,
     phone_number,
     description,
-    picture,
+    image,
     isBooked,
   } = house;
   return (
     <div>
       <div className="md:grid grid-cols-2 gap-2 shadow-xl rounded-lg">
         <div className="col-span-1 flex justify-center w-full md:h-[420px]">
-          <PhotoView src={picture}>
-          <img
-            className="md:rounded-l-lg rounded-t-lg md:h-full h-auto w-full md:w-auto"
-            src={picture}
-            alt=""
-          />
+          <PhotoView src={image}>
+            <img
+              className="md:rounded-l-lg rounded-t-lg md:h-full h-auto w-full md:w-auto"
+              src={image}
+              alt=""
+            />
           </PhotoView>
         </div>
         <div className="p-2 text-left text-lg flex flex-col justify-between">
@@ -52,7 +52,8 @@ const HousesHomeOneCard = ({ house }) => {
             </div>
             <p>
               <span className="font-bold">Description:</span>{" "}
-              {description?.slice(0, 450)} <span className="font-bold">Read more...</span>
+              {description?.slice(0, 450)}{" "}
+              <span className="font-bold">Read more...</span>
             </p>
           </div>
           <div className="flex justify-end">

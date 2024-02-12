@@ -21,14 +21,14 @@ const AddAHouse = ({ showModal, setShowModal }) => {
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
-    console.log(data);
-    // image upload to imgbb and then get an url
+    
     const imageFile = { image: data.housePicture[0] };
     const res = await axiosPublic.post(image_hosting_api, imageFile, {
       headers: {
         "content-type": "multipart/form-data",
       },
     });
+    
     if (res.data.success) {
       // now send the menu item data to the server with the image url
       const homeItem = {
@@ -196,7 +196,7 @@ const AddAHouse = ({ showModal, setShowModal }) => {
 
                   <div className="mb-4 col-span-2">
                     <label className="block text-gray-700">
-                     BD Phone Number:
+                      BD Phone Number:
                     </label>
                     <input
                       {...register("phone_number", {
@@ -212,9 +212,7 @@ const AddAHouse = ({ showModal, setShowModal }) => {
                   </div>
 
                   <div className="mb-4 col-span-2">
-                    <label className="block text-gray-700">
-                      Description:
-                    </label>
+                    <label className="block text-gray-700">Description:</label>
                     <input
                       {...register("description", {
                         required: "Description is required",

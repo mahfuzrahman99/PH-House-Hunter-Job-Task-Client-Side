@@ -11,29 +11,21 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const axiosSecure = useAxiosSecure();
 
-  console.log(user);
+  // console.log(user);
   const signInUser = () => {
-    setLoading(true);
-  };
-
-  const logOut = () => {
     setLoading(true);
   };
 
   useEffect(() => {
     const isLoggedIn = localStorage.getItem("isLoggedIn");
-    console.log(isLoggedIn);
     if (isLoggedIn) {
       axiosSecure
         .get("/loggedInUser")
         .then((res) => {
           setLoading(false)
           setUser(res.data);
-          console.log(res.data);
+          // console.log(res.data);
         })
-        .catch((err) => {
-          console.log(err);
-        });
     }
   }, []);
 
@@ -41,10 +33,8 @@ const AuthProvider = ({ children }) => {
     user,
     loading,
     setLoading,
-    // createUser,
     signInUser,
     setUser,
-    logOut,
   };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>

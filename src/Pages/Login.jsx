@@ -33,7 +33,7 @@ const Login = () => {
 
     // Send login request to backend server (replace with your API endpoint)
     try {
-      const response = await axiosSecure.post("/login", loginData);
+      const response = await axiosSecure.post("/login", loginData, {withCredentials:true});
       console.log("login handler");
 
       const responseData = response.data;
@@ -41,6 +41,7 @@ const Login = () => {
       console.log(responseData.userData);
 
       if (response.status === 200) {
+        localStorage.setItem("isLoggedIn", true);
         // Login successful
         Swal.fire({
           position: "top",
@@ -94,7 +95,7 @@ const Login = () => {
               Password:
             </label>
             <input
-              type="password"
+              type="text"
               id="password"
               name="password"
               className="p-2 rounded-md"

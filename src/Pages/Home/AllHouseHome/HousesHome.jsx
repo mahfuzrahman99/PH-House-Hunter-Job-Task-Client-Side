@@ -1,12 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-import { Link } from "react-router-dom";
 import SectionTitle from "../../../Components/SectionTitle";
 import useFetchHouse from "../../../Hooks/useFetchHouse";
 import HousesHomeOneCard from "./HousesHomeOneCard";
 import { useEffect, useState } from "react";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
-import SearchBoxes from "../../../Components/Search Boxes/SearchBoxes";
+import SearchBox from "../../../Components/Search Boxes/SearchBox";
 
 const HousesHome = () => {
   const [houses] = useFetchHouse();
@@ -25,14 +24,14 @@ const HousesHome = () => {
     });
 
     axiosSecure.get("/api/houseCount").then((res) => {
-      // console.log(res.data)
-      // console.log(Math.ceil(res.data.count / limit));
       setTotalHouse(Array.from({ length: Math.ceil(res.data.count / limit) }));
     });
   }, [skip]);
 
+  // console.log(data)
+
   const fetchData = (ind) => {
-    console.log(ind);
+    // console.log(ind);
     setSkip(ind + 1 * limit);
     setActive(ind);
   };
@@ -41,7 +40,7 @@ const HousesHome = () => {
     <div className=" max-w-6xl mx-auto">
       <SectionTitle heading={"Luxurious houses"} />
       <div>
-        <SearchBoxes/>
+        <SearchBox setTotalHouse={setTotalHouse} setData={setData} limit={limit}/>
       </div>
       <div className=" md:grid grid-cols-1 gap-8 mt-20">
         {data?.map((house) => (

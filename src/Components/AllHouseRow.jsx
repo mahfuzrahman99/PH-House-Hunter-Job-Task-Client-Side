@@ -46,14 +46,14 @@ const AllHouseRow = ({ house, i, refetch }) => {
       }
     }
   };
-
+// console.log(house.image)
   return (
     <>
       <tr className="bg-gray-100 text-xs">
         <td className="py-2 px-4 border-b-4">{i + 1}</td>
         <td className="py-2 px-4 border-b-4">
-          <PhotoView src={house?.picture}>
-            <img className="h-12" src={house?.picture} alt={house?.name} />
+          <PhotoView src={house?.image}>
+            <img className="h-12" src={house?.image} alt={house?.name} />
           </PhotoView>
         </td>
         <td className="py-2 px-4 border-b-4">{house?.name}</td>

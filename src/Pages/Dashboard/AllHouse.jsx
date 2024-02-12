@@ -20,7 +20,7 @@ const AllHouse = () => {
     setSearchedHouse(filteredHouse);
   };
   const houseToDisplay = searchedHouse?.length ? searchedHouse : houses;
-
+// console.log( houses)
   return (
     <div>
       <div className="flex justify-between m-10">
@@ -48,7 +48,7 @@ const AllHouse = () => {
         </div>
       </div>
       <div>
-        <AllHouseDisplay houses={houses} refetch={refetch} handleSearchBlog={handleSearchBlog} houseToDisplay={houseToDisplay}/>
+        <AllHouseDisplay refetch={refetch} houseToDisplay={houseToDisplay}/>
       </div>
     </div>
   );

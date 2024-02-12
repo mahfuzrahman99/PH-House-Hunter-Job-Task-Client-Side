@@ -1,24 +1,28 @@
 /* eslint-disable react/prop-types */
 import { useContext, useEffect, useState } from "react";
-import { Link, NavLink, Navigate,  } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import "react-photo-view/dist/react-photo-view.css";
 import { AuthContext } from "../Provider/AuthProvider";
 import useUsers from "../Hooks/useUsers";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
-  const { user, logOut } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
+  const axiosSecure = useAxiosSecure();
   const [users] = useUsers();
   const [isHouseOwner, setHouseOwner] = useState(false);
   const [isHouseRenter, setHouseRenter] = useState(false);
-    console.log(user);
+  const navigate = useNavigate()
+  // console.log(user);
   useEffect(() => {
     const userRole = users.find((u) => u?.email === user?.email);
     if (userRole) {
       if (userRole.role === "House_Owner") {
-        setHouseOwner(true); 
+        setHouseOwner(true);
       } else if (userRole.role === "House_Renter") {
-        setHouseRenter(true); 
+        setHouseRenter(true);
       }
     }
     // console.log(userRole.role);
@@ -57,7 +61,7 @@ const Navbar = () => {
         {user ? (
           <NavLink
             to={
-                isHouseOwner
+              isHouseOwner
                 ? "/owner_Dashboard/owner_Profile"
                 : isHouseRenter
                 ? "/user_Dashboard/user_profile"
@@ -99,11 +103,19 @@ const Navbar = () => {
   );
 
   const handleLogout = () => {
-    logOut()
+    axiosSecure
+      .delete("/logout")
       .then(() => {
-        Navigate("/login");
+        localStorage.clear("isLoggedIn");
+        navigate("/login");
+        Swal.fire({
+          position: "top",
+          icon: "success",
+          title: "Logout successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       })
-      .catch(() => {});
   };
 
   return (
@@ -137,7 +149,9 @@ const Navbar = () => {
           </ul>
         </div>
         <div>
-          <h1 className="text-2xl font-semibold text-[#00938a] p-2 rounded bg-[#cad0db]">House Hunter</h1>
+          <h1 className="text-2xl font-semibold text-[#00938a] p-2 rounded bg-[#cad0db]">
+            House Hunter
+          </h1>
         </div>
       </div>
 
@@ -149,7 +163,6 @@ const Navbar = () => {
           {user ? (
             <>
               <div className="dropdown z-10 dropdown-bottom dropdown-end">
-                
                 <ul
                   tabIndex={0}
                   className="dropdown-content z-[1] menu p-2 shadow rounded-box w-52 bg-black bg-opacity-60"
@@ -197,7 +210,9 @@ const Navbar = () => {
             tabIndex={0}
             className="btn btn-outline btn-circle border-none hover:bg-transparent avatar"
           >
-           <p className="text-[#00938a] font-bold p-1 rounded bg-[#cad0db]">{user?.fullName}</p>
+            <p className="text-[#00938a] font-bold p-1 rounded bg-[#cad0db]">
+              {user?.fullName}
+            </p>
           </label>
         </div>
       </div>

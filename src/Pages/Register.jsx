@@ -34,7 +34,7 @@ const Register = () => {
       role,
       phoneNumber,
       email,
-      password,
+      password
     };
     try {
       console.log(userData);
@@ -43,6 +43,7 @@ const Register = () => {
       console.log(response.data.userData);
       if (response.status === 200) {
         setUser(response.data.userData);
+        localStorage.setItem("isLoggedIn", true);
         // (Here, redirect to login page or show success message)
         Swal.fire({
           position: "top",
@@ -145,7 +146,7 @@ const Register = () => {
               Password:
             </label>
             <input
-              type="password"
+              type="text"
               id="password"
               name="password"
               className="p-2 rounded-md"
